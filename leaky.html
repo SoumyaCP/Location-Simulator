@@ -1,0 +1,60 @@
+
+<html>
+<head>
+    <title>bgimage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .img {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-image: url("leaky_image.png"); 
+            background-size: cover;
+        }
+
+        .a1 {
+            width: 100%;
+            height: 100%;
+            font-size: 30px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #leaky-paragraph {
+            opacity: 0;
+            transition: opacity 2s; 
+        }
+
+        #leaky-paragraph.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="img">
+        <div class="a1">
+            <h1>LEAKY CAULDRON</h1><br>
+            <p id="leaky-paragraph">The Leaky Cauldron was built in the 1500s by Daisy Dodderidge.[3] The pub was there long before Charing Cross Road was even planned. Its true address is number one Diagon Alley, and it is believed to have been built along with the rest of the wizarding street. Created some two centuries before the wizarding world community made the joint decision to go into hiding, the Leaky Cauldron used to be visible to Muggle eyes.
+                Located at 1 Diagon Alley,[1] The Leaky Cauldron was nested between a Muggle bookshop and a record store. Inside the pub, it was dark and shabby, with a bar and a number of tables in the shadows of the corners. In stark contrast to the grubby downstairs of the pub, there were some unexpectedly pleasant rooms upstairs where passing wizards and witches could stay for the night. These rooms were reached by way of a handsome wooden staircase, and contained comfortable beds, highly polished oak furniture, a crackling fire which was always burning in the grate to welcome the visitor to their lodgings, and, in Harry's case, a talking mirror.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function a(){
+            var paragraph = document.getElementById("leaky-paragraph");
+            paragraph.classList.add("show");
+        }
+        
+        var interval = setInterval(a,3000);
+    </script>
+</body>
+</html>

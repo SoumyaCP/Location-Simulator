@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <title>Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: black;
+            color: white;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+        }
+
+        .menu-heading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 50px;
+            padding: 15px;
+            border: 3px solid white;
+            border-radius: 9px;
+            color: white;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .image-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .image-item {
+            margin: 10px;
+            text-align: center;
+            background-color: dark grey;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .food-item {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .price {
+            font-size: 22px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .description {
+            font-size: 22px;
+            color: white;
+        }
+
+        button {
+            background-color: #4c4faf;
+            color: white;
+            border: none;
+            padding: 25px 40px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 30px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+        }
+
+        hr {
+            width: 100%;
+            margin-top: 5cm;
+            border: 1px solid white;
+        }
+
+        .order-form {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-form label,
+        .order-form input,
+        .order-form button {
+            margin: 10px;
+        }
+
+        /* Additional styles for input boxes */
+        input {
+            width: 50%;
+            padding: 30px;
+            box-sizing: border-box;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="menu-heading">
+            <h1>Menu</h1>
+        </div>
+    </div>
+
+    <div id="root"></div>
+    <div id="totalOrderAmount"></div>
+
+    <script type="text/babel">
+        const images = [
+            { id: 1, name: 'Soup', price: '$8', description: 'Delicious soup made with fresh ingredients.', url: 'soup.png' },
+            { id: 2, name: 'Fish & Chips', price: '$5', description: 'Crispy fish fillets with golden fries.', url: 'fish.jpg' },
+            { id: 3, name: 'Desserts', price: '$7', description: 'A variety of sweet treats to satisfy your cravings.', url: 'desserts.jpg' },
+            { id: 4, name: 'Beverages', price: '$3', description: 'Refreshing drinks to quench your thirst.', url: 'beverage.jpg' },
+            { id: 5, name: 'Burger', price: '$4', description: 'Juicy burger with all the fixings.', url: 'burger.jpg' },
+            { id: 6, name: 'Salad', price: '$5.5', description: 'Fresh and healthy salad options.', url: 'salad.jpg' },
+            { id: 7, name: 'Egg Parmesan', price: '$10', description: 'Savory egg dish with Parmesan cheese.', url: 'egg.jpg' },
+            { id: 8, name: 'Spring Rolls', price: '$8', description: 'Delightful spring rolls with dipping sauce.', url: 'rolls.jpg' },
+            { id: 9, name: 'Sandwich', price: '$3.5', description: 'Classic and satisfying sandwich choices.', url: 'sandwich.jpg' },
+        ];
+
+        // ...
+
+class ImageGallery extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        selectedItems: [], // Array to store selected items and quantities
+        totalOrderPrice: 0,
+      };
+  
+      // Bind the method to the class instance
+      this.submitOrderAPI = this.submitOrderAPI.bind(this);
+    }
+  
+    // Function to handle form submission and API call
+    submitOrderAPI(event) {
+      event.preventDefault();
+  
+      // Get the form elements
+      const formElements = event.target.elements;
+  
+      // Get the food ID and quantity
+      const foodId = parseInt(formElements['foodId'].value);
+      const quantity = parseInt(formElements['quantity'].value);
+  
+      // Make API call to submit the order
+      fetch('http://localhost:3001/api/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ foodId, quantity }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.message);
+          // Optionally, you can update the state or display a success message
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          // Optionally, you can update the state or display an error message
+        });
+    }
+  
+    // Function to handle form submission
+    submitOrder(event) {
+      event.preventDefault();
+  
+      // Get the form elements
+      const formElements = event.target.elements;
+  
+      // Get the food ID and quantity
+      const foodId = parseInt(formElements['foodId'].value);
+      const quantity = parseInt(formElements['quantity'].value);
+  
+      // Find the corresponding food item in the images array
+      const selectedFood = images.find((food) => food.id === foodId);
+  
+      // Calculate the total order price for the current item
+      const itemTotalPrice = quantity * parseFloat(selectedFood.price.replace('$', ''));
+  
+      // Add the selected item and quantity to the array
+      const selectedItem = {
+        id: foodId,
+        name: selectedFood.name,
+        quantity: quantity,
+        price: itemTotalPrice,
+      };
+  
+      const updatedSelectedItems = [...this.state.selectedItems, selectedItem];
+  
+      // Calculate the total order price for all selected items
+      const totalOrderPrice = updatedSelectedItems.reduce((total, item) => total + item.price, 0);
+  
+      // Set the selectedItems and totalOrderPrice in the state
+      this.setState({
+        selectedItems: updatedSelectedItems,
+        totalOrderPrice: totalOrderPrice,
+      });
+    }
+  
+    render() {
+      return (
+        <div>
+          <div className="image-row">
+            {images.map((image) => (
+              <div key={image.id} className="image-item">
+                <img src={image.url} alt={`Image ${image.id}`} className="image" />
+                <div className="food-item">{`#${image.id} ${image.name}`}</div>
+                <div className="price">{`Price: ${image.price}`}</div>
+                <div className="description">{`${image.description}`}</div>
+              </div>
+            ))}
+          </div>
+  
+          {/* Display total order amount */}
+          <div id="totalOrderAmount">
+            <p style={{ fontSize: '50px' }}>Your total order amount is: ${this.state.totalOrderPrice}</p>
+          </div>
+  
+          {/* Order form */}
+          <form onSubmit={this.submitOrder} className="order-form">
+            <label style={{ fontSize: '50px' }} htmlFor="foodId">
+              Food ID:
+            </label>
+            <input type="number" id="foodId" name="foodId" min="1" required />
+            <label style={{ fontSize: '50px' }} htmlFor="quantity">
+              Quantity:
+            </label>
+            <input type="number" id="quantity" name="quantity" min="0" required />
+            <button type="submit">Submit Order</button>
+          </form>
+  
+          <button onClick={() => this.showOrderForm()}>ORDER</button>
+        </div>
+      );
+    }
+  
+    // Function to show the order form
+    showOrderForm() {
+      const orderForm = document.querySelector('.order-form');
+      orderForm.style.display = 'flex';
+    }
+  }
+  
+  ReactDOM.render(<ImageGallery />, document.getElementById('root'));
+  
+    </script>
+</body>
+
+</html>

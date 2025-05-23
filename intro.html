@@ -1,0 +1,134 @@
+<html>
+<head>
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin>
+</script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+#b
+{
+ background:black;
+ 
+}
+.image-container {
+      display: flex;
+	
+    }
+    .image-container div {
+      margin-right: 10px;
+    }
+a
+{
+color:white;
+font-size:30px;
+}
+#header1
+{
+text-align:center;
+color:green;font-size:xx-large;font-family:verdana;
+}
+#header2
+{
+text-align:center;
+color:lime;font-size:30px;font-family:ariel;
+}
+
+</style>
+</head>
+<body id="b">
+
+<div id="header1"></div>
+<div id="header2"></div>
+<div id="container"></div>
+<script type="text/babel">
+
+function Header1(){
+return(
+<div>
+<h2>WELCOME TO DIAGON ALLEY!!!</h2>
+</div>
+)}
+
+function Header2(){
+return(
+<div>
+<p>Diagon Alley was a cobblestoned wizarding alley and shopping area located in London, England. Inside the alley was an assortment of restaurants, shops, and other sights. </p><p>All items on the Hogwarts supply list could be bought at Diagon Alley
+</p>
+</div>
+)}
+
+
+
+
+class Imagesss extends React.Component{
+render(){
+return(
+<div>
+<img src={this.props.src} width="350" height="500" border="3px"></img>
+</div>
+);}}
+
+
+class Images extends React.Component{
+render(){
+return(
+<div>
+<img src={this.props.src} width="350" height="350" border="3px"></img>
+</div>
+);}}
+class Links extends React.Component{
+render(){
+return(
+<div>
+<a href={this.props.link}>{this.props.linktext}</a> 
+</div>
+);}}
+class Captions extends React.Component{
+render(){
+return(
+<div>
+<p>{this.props.caption}</p>
+</div>
+);}}
+class Button extends React.Component{
+render(){
+return(
+<div>
+<a href={this.props.button}>visit</a>
+
+</div>
+);}}
+class Results extends React.Component{
+render(){
+return(
+<div>
+<Images{...this.props}/>
+<Links{...this.props}/>
+<Captions{...this.props}/>
+<Button{...this.props}/>
+</div>
+);}}
+
+ReactDOM.render(<Header1 />,document.getElementById("header1"));
+ReactDOM.render(<Header2 />,document.getElementById("header2"));
+
+ReactDOM.render(
+<div>
+<div class="image-container">
+<Imagesss src="light1.jpg" />
+<Results src="train.jpg" link="https://harrypotter.fandom.com/wiki/Platform_Nine_and_Three-Quarters" linktext="PlatformNineAndThreeQurters.com" caption="train" button="file:///C:/Users/91636/Desktop/web%20tech/assignments/project.html" buttonText="submit"/>
+
+<Results src="cauldron.jpg" link="https://harrypotter.fandom.com/wiki/Leaky_Cauldron" linktext="LeakyCauldron.com" caption="leaky" button="http://127.0.0.1:5500/restau.html" buttonText="click"/>
+<Results src="olivanders.jpg" link="https://harrypotter.fandom.com/wiki/Ollivanders" linktext="Ollivanders.com" caption="ollivanders" button="submit" buttonText="click"/>
+<Results src="hogwarts.jpg" link="https://harrypotter.fandom.com/wiki/Hogwarts_School_of_Witchcraft_and_Wizardry" linktext="Hogwarts.com" caption="hogwarts" button="file:///C:/Users/91636/Desktop/web%20tech/assignments/hogwartspage.html" buttonText="click"/>
+<Imagesss src="light2.jpg" />
+
+</div>
+<div>
+<img src="road.jpg" height="150" width="2200"></img>
+</div></div>,
+document.querySelector("#container"));
+</script>
+</body>
+</html>
